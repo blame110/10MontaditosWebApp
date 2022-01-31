@@ -245,7 +245,7 @@ public class MontaditoDAO {
 		return 0;
 	}
 
-	public ArrayList<MontaditoVO> cargarMontaditosBD() {
+	public static ArrayList<MontaditoVO> cargarMontaditosBD() {
 
 		// Definimos el arrayList que guardara todos los montaditos de la BD
 		ArrayList<MontaditoVO> montaditos = new ArrayList<MontaditoVO>();
