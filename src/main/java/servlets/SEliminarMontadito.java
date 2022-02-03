@@ -44,23 +44,42 @@ public class SEliminarMontadito extends HttpServlet {
 		
 		if (request.getParameter("idMontadito")!=null)
 		sidMontadito = request.getParameter("idMontadito");
-		System.out.println("id de montadito" + sidMontadito);
 		
 		if (sidMontadito!=null && Validaciones.isNumeric(sidMontadito))
 			idMontadito = Integer.parseInt(sidMontadito);
 			
 		
-		out.println("<html><head><title>Borrar Montadito</title></head><body>");
 		//Borramos el montadito
-		System.out.println("id de montadito" + idMontadito);
 		if (MontaditoDAO.borrarMontadito(idMontadito)==0)
 		{
-			// Variables
-			out.println("El montadito se ha borrado correctamente");
-				}
+			try {
+			//Si hemos podido borrar el montadito redireccionamos al listado
+			response.sendRedirect("mostrarMontaditos.jsp");
+				}catch (IOException ioe)
+			{
+					out.println("No se encontro la url destino");
+					
+			}
+		}
 		else
 		{
+			//Si no hemos podido borrarlos mostramos un mensaje de error
 			out.println("Ha habido un problema al borrar el montadito");
+			try {
+				Thread.sleep(3000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+			//Si hemos podido borrar el montadito redireccionamos al listado
+			response.sendRedirect("mostrarMontaditos.jsp");
+				}catch (IOException ioe)
+			{
+					out.println("No se encontro la url destino");
+					
+			}
+
 	
 		}
 		

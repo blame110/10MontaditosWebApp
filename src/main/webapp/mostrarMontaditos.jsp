@@ -62,14 +62,34 @@ for (int i=0;i<listaMontadito.size();i++)
 	
 	//En premiun si es 1 ponemos un checkbox marcado
 	if (listaMontadito.get(i).getPremium()==1)
-		out.print("<input type='checkbox' disabled=true checked=true/>");
+		out.print("<input type='checkbox' name='premium' disabled=true checked=true/>");
 	else 
-		out.print("<input type='checkbox' disabled=true />");
+		out.print("<input type='checkbox' name='premium' disabled=true />");
 	
+	//Para eliminar el montadito creamos un formulario con un boton
+	//Que llama al servlet eliminarmontadito pasandole el idmontadito a eliminar
 	out.println("</td>");
-	out.println("<td>&nbsp;</td>");
-	out.println("<td>&nbsp;</td>");
+	out.println("<td>");
+	out.println("<form method='post' action='/10MontaditosWebApp/SEliminarMontadito'>");
+	out.println("<input type='submit' value='Borrar'/>");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getIdMontadito() + "' name='idMontadito' />");
+	out.println("</form></td>");
+	
+	//Para modificar el montadito llamamos a otro jsp pasandole el id de montadito
+	out.println("</td>");
+	out.println("<td>");
+	out.println("<form method='post' action='/10MontaditosWebApp/modificarMontadito.jsp'>");
+	out.println("<input type='submit' value='Modificar'/>");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getIdMontadito() + "' name='idMontadito' />");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getNombre() + "' name='nombre' />");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getPrecio() + "' name='precio' />");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getTamano() + "' name='tamano' />");
+	out.println("<input type='hidden' value='" + listaMontadito.get(i).getPremium() + "' name='premium' />");
+
+
+	out.println("</form></td>");
 	out.println("</tr>");
+	
 
 }
 

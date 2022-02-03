@@ -159,11 +159,11 @@ public class MontaditoDAO {
 	 * @param premium
 	 * @return devuelve 0 si la actualización ha sido correcta, 1 en caso contrario
 	 */
-	public int actualizarMontaditoDB(int idMontadito, String nombre, int precio, String tamano, short premium) {
+	public static int actualizarMontaditoDB(int idMontadito, String nombre, int precio, String tamano, short premium) {
 
 		// Comprobamos que no hay fallos en los datos
 		if (idMontadito == 0 || (nombre == null && precio == 0 && tamano == null && (premium != 0 || premium != 1))) {
-			return 1;
+			return -1;
 		}
 
 		// Conectamos con la BD
@@ -185,7 +185,7 @@ public class MontaditoDAO {
 
 			// Si hay un nombre lo añadimos a la sentencia
 			if (nombre != null) {
-				actualizar.concat("nombre='" + nombre + "'");
+				actualizar = actualizar + "nombre='" + nombre + "'";
 				campoPrevio = true;
 			}
 
@@ -194,9 +194,9 @@ public class MontaditoDAO {
 				// La , no la añadimos sólo si previamente
 				// No se modifico ningun cambio
 				if (campoPrevio)
-					actualizar.concat(",precio=" + precio);
+					actualizar = actualizar + ",precio=" + precio;
 				else
-					actualizar.concat("precio=" + precio);
+					actualizar = actualizar + "precio=" + precio;
 				// Activamos el flag (boolean) campo previo
 				campoPrevio = true;
 			}
@@ -206,9 +206,9 @@ public class MontaditoDAO {
 				// La , no la añadimos sólo si previamente
 				// No se modifico ningun cambio
 				if (campoPrevio)
-					actualizar.concat(",tamano='" + tamano + "'");
+					actualizar = actualizar + ",tamanio='" + tamano + "'";
 				else
-					actualizar.concat("tamano='" + tamano + "'");
+					actualizar = actualizar + "tamanio='" + tamano + "'";
 
 				// Activamos el flag (boolean) campo previo
 				campoPrevio = true;
@@ -219,20 +219,20 @@ public class MontaditoDAO {
 				// La , no la añadimos sólo si previamente
 				// No se modifico ningun cambio
 				if (campoPrevio)
-					actualizar.concat(",premium=" + premium);
+					actualizar = actualizar + ",premium=" + premium;
 				else
-					actualizar.concat("premium=" + premium);
+					actualizar = actualizar + "premium=" + premium;
 
 			}
 
-			actualizar = actualizar + " WHERE idMontadito = " + idMontadito;
+			actualizar = actualizar + " WHERE idMontaditos = " + idMontadito;
 
 			int filasAfectadas = stmt.executeUpdate(actualizar);
 
 			// Si no se ha actualizado ningun registro
 			// devolvemos fallo
 			if (filasAfectadas == 0)
-				return 1;
+				return -1;
 
 			// Cerramos la conexion con la BD
 			con.close();
@@ -240,6 +240,7 @@ public class MontaditoDAO {
 
 		} catch (SQLException sqe) {
 			sqe.printStackTrace();
+			return -1;
 		}
 
 		return 0;
