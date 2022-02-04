@@ -40,7 +40,7 @@ String spremium = request.getParameter("premium");
 		
 			<label for="fpremium">Premium</label> 
 			<input type="checkbox" id="fpremium" name="premium" <% if (spremium.equals("1")) 
-				out.print("checked value='1'"); else out.print("value='0'"); 
+				out.print("checked=true"); 
 				%> /> 
 			<input type="hidden" name="idMontadito" value=<% out.println(sidMontadito); %>">
 			<input type="submit" value="Modificar">

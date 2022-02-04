@@ -56,8 +56,11 @@ public class SModificarMontadito extends HttpServlet {
 		if (Validaciones.isNumeric(sprecio))
 			precio = Integer.valueOf(sprecio);
 
-		if (Validaciones.isNumeric(spremium))
-			premium = Short.valueOf(spremium);
+		//Si premium no es nulo entonces el checkbox esta marcado
+		if (spremium!=null)
+			premium = 1;
+		else
+			premium =0;
 		
 		
 		//Modificamos el montadito en la BD
