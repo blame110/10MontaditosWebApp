@@ -8,8 +8,16 @@ public class UsuarioVO {
 	private String nif;
 	private String direccion;
 	private String telefono;
+	private int tipo;
 	
-	public UsuarioVO(String email, String nombre, String password, String nif, String direccion, String telefono) {
+		
+	public UsuarioVO() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
+	public UsuarioVO(String email, String nombre, String password, String nif, String direccion, String telefono,
+			int tipo) {
 		super();
 		this.email = email;
 		this.nombre = nombre;
@@ -17,10 +25,7 @@ public class UsuarioVO {
 		this.nif = nif;
 		this.direccion = direccion;
 		this.telefono = telefono;
-	}
-	public UsuarioVO() {
-		super();
-		// TODO Auto-generated constructor stub
+		this.tipo = tipo;
 	}
 	public String getEmail() {
 		return email;
@@ -58,10 +63,16 @@ public class UsuarioVO {
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
+	public int getTipo() {
+		return tipo;
+	}
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
+	}
 	@Override
 	public String toString() {
 		return "UsuarioVO [email=" + email + ", nombre=" + nombre + ", password=" + password + ", nif=" + nif
-				+ ", direccion=" + direccion + ", telefono=" + telefono + "]";
+				+ ", direccion=" + direccion + ", telefono=" + telefono + ", tipo=" + tipo + "]";
 	}
 	
 	

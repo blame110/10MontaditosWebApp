@@ -7,20 +7,19 @@
 	href="/10MontaditosWebApp/css/style.css" />
 <%@page import="model.MontaditoDAO"%>
 <%@page import="model.UsuarioDAO"%>
+<%@page import="servlets.SLogin"%>
 <%@page import="javax.servlet.http.HttpSession"%>
 
 <meta charset="ISO-8859-1">
 <title>Login</title>
 
 <%
-//La primera vez que carga el login ponemos a nulo el error de login
-String error="";
+//Inicializamos a 3 el número de intentos
+int numIntentos = SLogin.NUM_INTENTOS;
 
-if (request.getAttribute("falloLogin")!=null)
-{
-	//Recuperamos el error
-	
-	error = (String) request.getAttribute("falloLogin");
+//recuperamos el numero de intentos
+if (request.getAttribute("numIntentos")!=null){
+ numIntentos = (int) request.getAttribute("numIntentos");
 }
 
 
@@ -37,12 +36,14 @@ if (request.getAttribute("falloLogin")!=null)
 			<input type="password" id="fpassword" name="password" placeholder="Introduce el password.." /> 
 
 <%
-    if (error.equals(UsuarioDAO.ERROR_LOGIN)){
+//Si los intentos no son 3 se ha fallado en el login
+    if (numIntentos != SLogin.NUM_INTENTOS){
 %>
-		<label>Hubo un error en los datos, intentelo de nuevo</label> 
+		<label>Hubo un error en los datos, intentelo de nuevo. Te quedan <%out.print(numIntentos); %> intentos </label> 
 <%
 };
 %>
+			<input type="hidden" name="numIntentos" value="<%out.print(numIntentos); %>">
 			<input type="submit" value="Ingresar">
 		
 </form>

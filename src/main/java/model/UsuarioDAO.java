@@ -13,6 +13,10 @@ public class UsuarioDAO {
 	
 	public static final String ERROR_LOGIN = "ERROR";
 	public static final String LOGIN_CORRECTO = "LOGINOK";
+	
+	//Constantes que definen el tipo de usuario
+	public static final int TIPO_ADMIN = 0;
+	public static final int TIPO_CLIENTE = 1;
 
 	
 	/**
@@ -47,7 +51,7 @@ public class UsuarioDAO {
 			// Cargamos el registro
 			if (res.next()) {
 				//Creamos un usuario si hay un registro en bd que coincida
-				usuario = new UsuarioVO(email, res.getString("nombre"), res.getString("password"),res.getString("nif"),res.getString("direccion"),res.getString("telefono"));
+				usuario = new UsuarioVO(email, res.getString("nombre"), res.getString("password"),res.getString("nif"),res.getString("direccion"),res.getString("telefono"), res.getInt("tipo"));
 
 			} 
 
