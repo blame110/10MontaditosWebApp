@@ -292,4 +292,52 @@ public class MontaditoDAO {
 
 	}
 
+
+	public static ArrayList<MontaditoVO> cargarMontaditosBD(int numPagina, int cantidad) {
+
+		// Definimos el arrayList que guardara todos los montaditos de la BD
+		ArrayList<MontaditoVO> montaditos = new ArrayList<MontaditoVO>();
+
+		// Conectamos con la BD
+		Connection con = ConexionBD.conectar();
+
+		// Definimos un ResulSet para recoger los datos de la BD
+		ResultSet res = null;
+
+		try {
+
+			// Creamos el Statement
+			Statement stmt = con.createStatement();
+
+			// Recuperamos de la BD el montadito
+			res = stmt.executeQuery("SELECT * FROM montaditos LIMIT " + cantidad + " OFFSET " + 10*(numPagina-1));
+
+			// Cargamos todos los registros de la tabla montaditos
+			// en el arrayList, Mientras haya filas en la tabla
+			// Creamos un montadito y lo añadimos al ArrayList
+			while (res.next()) {
+				// Creamos un montadito y lo cargamos con los datos del resulset
+				MontaditoVO montadito = new MontaditoVO(res.getInt("idMontaditos"), res.getString("nombre"),
+						res.getInt("precio"), res.getString("tamanio"), res.getShort("premium"));
+				// Añadimos
+
+				montaditos.add(montadito);
+
+			}
+
+			stmt.close();
+			con.close();
+			res.close();
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		// devolvemos el array cargado con los montaditos
+		return montaditos;
+
+	}
+
+	
 }

@@ -20,6 +20,7 @@ public class MontaditoVO implements Serializable {
 		this.precio = 0;
 		this.tamano = "";
 		this.premium = 0;
+	
 	}
 
 	public MontaditoVO(int idMontadito, String nombre, int precio, String tamano, short premium) {

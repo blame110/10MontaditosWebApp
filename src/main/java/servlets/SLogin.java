@@ -92,7 +92,7 @@ public class SLogin extends HttpServlet {
 			{
 			case UsuarioDAO.TIPO_ADMIN:
 				//Reenviamos a la lista de montaditos del administrador
-				request.getRequestDispatcher("mostrarMontaditos.jsp").forward(request, response);
+				request.getRequestDispatcher("SMostrarMontaditos").forward(request, response);
 				break;
 
 			case UsuarioDAO.TIPO_CLIENTE:
