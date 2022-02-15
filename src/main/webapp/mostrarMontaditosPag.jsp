@@ -14,10 +14,22 @@
 
 <meta charset="ISO-8859-1">
 <title>Insert title here</title>
+<%!
+public static String mostrarPaginacion(int numPagina)
+{
+	String paginacion="";
+	
+	paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina=" + (numPagina-1) + "'>Anterior</a>";
+	paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina=" + (numPagina-1) + "'>" + (numPagina-1) + "</a>";
+	paginacion+= " " + numPagina + " ";
+	paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina=" + (numPagina+1) + "'>Posterior</a>";
+
+	return paginacion;
+}
+
+%>
+
 <%
-
-
-
 //Recuperamos el tipo de usuario y el nombre
 int tipoUsuario=-1;
 if (request.getAttribute("tipoUsuario")!=null )
@@ -27,6 +39,12 @@ String nombre=null;
 if (request.getAttribute("nomUsuario")!=null)
 	nombre = (String) request.getAttribute("nomUsuario");
 
+//Recuperamos el tipo de pagina
+int numPagina=1;
+if (request.getAttribute("numPagina")!=null)
+	numPagina= (int) request.getAttribute("numPagina");
+
+
 //Si el tipo de usuario no es admin lo expulsamos al login
 if (tipoUsuario!=UsuarioDAO.TIPO_ADMIN)
 	response.sendRedirect("index.jsp");
@@ -34,8 +52,14 @@ if (tipoUsuario!=UsuarioDAO.TIPO_ADMIN)
 </head>
 <body>
 <%
+//Escribimos la cabecera de la paginación
+
+
+
 if (nombre!=null)
 	out.println("<h4>Bienvenido " + nombre + ", puedes acceder a tu perfil</h4>");
+
+out.println("<br>"+mostrarPaginacion(numPagina)+"<br>");
 %>
 	<div class="container">
 		<table class="styled-table">
@@ -59,9 +83,6 @@ ArrayList<MontaditoVO> listaMontadito = new ArrayList<MontaditoVO>();
 if (request.getAttribute("listaMontaditos")!=null)
 	listaMontadito = (ArrayList<MontaditoVO>) request.getAttribute("listaMontaditos");
 
-int numPagina=1;
-if (request.getAttribute("numPagina")!=null)
-	numPagina= Integer.valueOf((String)request.getAttribute("numPagina"));
 
 //Recorremos el arraylist
 for (int i=0;i<listaMontadito.size();i++)
@@ -117,14 +138,13 @@ for (int i=0;i<listaMontadito.size();i++)
 	out.println("</form></td>");
 	out.println("</tr>");
 	
-	out.println(SMostrarMontaditos.mostrarPaginacion(numPagina));
 	
 
 }
-
 %>
 </tbody>
 </table>
 </div>
+<%out.println("<br>"+mostrarPaginacion(numPagina)+"<br>"); %>
 </body>
 </html>

@@ -307,10 +307,18 @@ public class MontaditoDAO {
 		try {
 
 			// Creamos el Statement
-			Statement stmt = con.createStatement();
+			PreparedStatement pstmt = con.prepareStatement("SELECT * FROM montaditos LIMIT ? OFFSET ?");
 
+			//Ponemos los parametros al preparedstatement
+			//Limite de elementos por pagina
+			pstmt.setInt(1, cantidad);
+
+			//Offset
+			pstmt.setInt(2, 10*(numPagina-1));
+
+			
 			// Recuperamos de la BD el montadito
-			res = stmt.executeQuery("SELECT * FROM montaditos LIMIT " + cantidad + " OFFSET " + 10*(numPagina-1));
+			res = pstmt.executeQuery();
 
 			// Cargamos todos los registros de la tabla montaditos
 			// en el arrayList, Mientras haya filas en la tabla
@@ -325,7 +333,7 @@ public class MontaditoDAO {
 
 			}
 
-			stmt.close();
+			pstmt.close();
 			con.close();
 			res.close();
 

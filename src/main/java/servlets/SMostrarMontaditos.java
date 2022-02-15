@@ -8,6 +8,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import model.MontaditoDAO;
 import model.MontaditoVO;
@@ -19,17 +20,6 @@ import model.MontaditoVO;
 public class SMostrarMontaditos extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-	public static String mostrarPaginacion(int numPagina)
-	{
-		String paginacion="";
-		
-		paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina='" + (numPagina-1) + "'>Anterior</a>";
-		paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina='" + (numPagina-1) + "'>" + (numPagina-1) + "</a>";
-		paginacion+= " " + numPagina + " ";
-		paginacion+= "<a href='/10MontaditosWebApp/SMostrarMontaditos?numPagina='" + (numPagina+1) + "'>Posterior</a>";
-
-		return paginacion;
-	}
 	
     /**
      * @see HttpServlet#HttpServlet()
@@ -46,6 +36,8 @@ public class SMostrarMontaditos extends HttpServlet {
 		// TODO Auto-generated method stub
 		
 		int numPagina = 1;
+		//Recuperamos la sesion
+		HttpSession sesion = request.getSession();
 		
 		if (request.getParameter("numPagina")!=null)
 			numPagina=Integer.valueOf(request.getParameter("numPagina"));
@@ -54,6 +46,16 @@ public class SMostrarMontaditos extends HttpServlet {
 		
 		listaMontaditos = MontaditoDAO.cargarMontaditosBD(numPagina,10);
 		
+		//Cargamos de la sesion el nombre del usuario y el tipo
+		//Si no lo hacemos el jsp nos considera no logados
+		String nomUsuario= (String) sesion.getAttribute("nomUsuario");
+		int tipoUsuario = (int) sesion.getAttribute("tipoUsuario");
+		
+		//Metemos en el request las variables
+		request.setAttribute("nomUsuario", nomUsuario);
+		request.setAttribute("tipoUsuario", tipoUsuario);
+
+		//Enviamos la lista de montaditos y la pagina actual para la paginacion
 		request.setAttribute("listaMontaditos", listaMontaditos);
 		request.setAttribute("numPagina", numPagina);
 		
